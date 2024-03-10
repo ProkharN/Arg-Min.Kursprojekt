@@ -42,11 +42,27 @@ corpus_file = 'data/balanced_corpus.csv'
 corpus = pd.read_csv(corpus_file)
 
 # Function to generate text from 10 random sentences
+
+
 def generate_text(corpus, n=10):
     random_sentences = random.sample(list(corpus['sentence']), n)
     ids = ','.join(str(corpus[corpus['sentence'] == sent].index[0]) for sent in random_sentences)
-    text = ' '.join(random_sentences)
+    text = '. '.join(random_sentences)
     return text, ids
+
+
+
+
+# def generate_text(corpus, n=10):
+#     # Filter the corpus to include only sentences with a label of "0"
+#     non_argumentative_corpus = corpus[corpus['label'] == 1]
+#
+#     random_sentences = random.sample(list(non_argumentative_corpus['sentence']), n)
+#     ids = ','.join(str(non_argumentative_corpus[non_argumentative_corpus['sentence'] == sent].index[0]) for sent in
+#                    random_sentences)
+#     text = '. '.join(random_sentences)
+#
+#     return text, ids
 
 
 # Generate text and count argumentative sentences
@@ -60,7 +76,7 @@ def count_real_argumentative_sentences(ids, corpus):
     return real_argumentative
 
 def count_model_argumentative_sentences(text, clf):
-    sentences = list(re.split(r'(?<=[.!?])\s+', text))  # Ensure sentences is a list
+    sentences = list(re.split(r'(?<=[.!?])\s+', text))# Ensure sentences is a list
     model_argumentative = 0
     for sentence in sentences:
         # Preprocess the sentence (e.g., convert to lowercase, remove punctuation)
