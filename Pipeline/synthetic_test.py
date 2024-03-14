@@ -44,25 +44,25 @@ corpus = pd.read_csv(corpus_file)
 # Function to generate text from 10 random sentences
 
 
-def generate_text(corpus, n=10):
-    random_sentences = random.sample(list(corpus['sentence']), n)
-    ids = ','.join(str(corpus[corpus['sentence'] == sent].index[0]) for sent in random_sentences)
-    text = '. '.join(random_sentences)
-    return text, ids
-
-
-
-
-# def generate_text(corpus, n=10):
-#     # Filter the corpus to include only sentences with a label of "0"
-#     non_argumentative_corpus = corpus[corpus['label'] == 1]
-#
-#     random_sentences = random.sample(list(non_argumentative_corpus['sentence']), n)
-#     ids = ','.join(str(non_argumentative_corpus[non_argumentative_corpus['sentence'] == sent].index[0]) for sent in
-#                    random_sentences)
+# def generate_text(corpus, n=20):
+#     random_sentences = random.sample(list(corpus['sentence']), n)
+#     ids = ','.join(str(corpus[corpus['sentence'] == sent].index[0]) for sent in random_sentences)
 #     text = '. '.join(random_sentences)
-#
 #     return text, ids
+
+
+
+
+def generate_text(corpus, n=20):
+    # Filter the corpus to include only sentences with a label of "0"
+    non_argumentative_corpus = corpus[corpus['label'] == 1]
+
+    random_sentences = random.sample(list(non_argumentative_corpus['sentence']), n)
+    ids = ','.join(str(non_argumentative_corpus[non_argumentative_corpus['sentence'] == sent].index[0]) for sent in
+                   random_sentences)
+    text = '. '.join(random_sentences)
+
+    return text, ids
 
 
 # Generate text and count argumentative sentences
@@ -100,8 +100,8 @@ for _ in range(10):
     data_rows.append({
         'ids': ids,
         'texts': text,
-        'real number of argumentative sentences': real_argumentative,
-        'number of argumentative sentences assigned by the model': model_argumentative
+        'real number ': real_argumentative,
+        'assigned by the model': model_argumentative
     })
 # Create a DataFrame from the generated data
 new_corpus = pd.DataFrame(data_rows)
